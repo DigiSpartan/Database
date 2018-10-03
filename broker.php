@@ -34,6 +34,35 @@ function doLogin($username,$password)
     //return false if not valid
 }
 
+function doRegister($username, $password)
+{
+  if (!isset($username) || !isset($password)) {
+        echo "invalid input";
+        return false;
+  }
+
+   $db = mysqli_connect('localhost', 'emile', 'Password7!', 'authtest');
+   $pass_hash = hash('sha512', $password);
+   $s = "SELECT * FROM users WHERE username = '$username' AND passhash='$pass_hash'";
+   $t = mysqli_query($db, $s) or die (mysqli_error($db));
+   $num = mysqli_num_rows($t);
+   $file=__FILE_.PHP_EOL;
+   $pathArray = explode("/",$file);
+   if ($num = 0) {
+      echo "Registrated";
+      $s2 = "INSERT INTO users (username, passhash) VALUES ($username, $passhash)";
+      $t2 = mysqli_query($db, $s2) or die (mysqli_error($db));
+      return true;
+   }
+   else {
+     echo "Already registered";
+     return false;
+   }
+
+
+
+}
+
 function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
@@ -46,6 +75,8 @@ function requestProcessor($request)
   {
     case "login":
       return doLogin($request['username'],$request['password']);
+    case "register":
+      return doRegister($request['username'],$request['password']);
     case "validate_session":
       return doValidate($request['sessionId']);
   }
