@@ -49,9 +49,9 @@ function doRegister($username, $password)
    $file=__FILE_.PHP_EOL;
    $pathArray = explode("/",$file);
    if ($num == 0) {
-      echo "Registrated";
       $s2 = "INSERT INTO users (username, passhash) VALUES ('$username', '$pass_hash')";
       $t2 = mysqli_query($db, $s2) or die (mysqli_error($db));
+      echo "register";
       return true;
    }
    else {
