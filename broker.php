@@ -15,7 +15,9 @@ function doLogin($username,$password)
    }
    $db = mysqli_connect('localhost', 'emile', 'Password7!', 'authtest');
    $pass_hash = hash('sha512', $password);
-   $s = "SELECT * FROM users WHERE username = '$username' AND passhash='$pass_hash'";
+   $s = sprintf("SELECT * FROM users WHERE user='%s' AND password='%s'",
+            mysqli_real_escape_string($username),
+            mysqli_real_escape_string($pass_hash));
    $t = mysqli_query($db, $s) or die (mysqli_error($db));
    $num = mysqli_num_rows($t);
    $file=__FILE_.PHP_EOL;
@@ -43,13 +45,17 @@ function doRegister($username, $password)
 
    $db = mysqli_connect('localhost', 'emile', 'Password7!', 'authtest');
    $pass_hash = hash('sha512', $password);
-   $s = "SELECT * FROM users WHERE username = '$username' AND passhash='$pass_hash'";
+   $s = sprintf("SELECT * FROM users WHERE user='%s' AND password='%s'",
+            	mysqli_real_escape_string($username),
+           	mysqli_real_escape_string($pass_hash));
    $t = mysqli_query($db, $s) or die (mysqli_error($db));
    $num = mysqli_num_rows($t);
    $file=__FILE_.PHP_EOL;
    $pathArray = explode("/",$file);
    if ($num == 0) {
-      $s2 = "INSERT INTO users (username, passhash) VALUES ('$username', '$pass_hash')";
+      $s2 = sprintf("INSERT INTO users (username, passhash) VALUES ('%s', '%s')",
+		mysqli_real_escape_string($username), 
+		mysqli_real_escape_string($pass_hash));
       $t2 = mysqli_query($db, $s2) or die (mysqli_error($db));
       echo "register";
       return true;
