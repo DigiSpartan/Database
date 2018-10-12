@@ -20,7 +20,7 @@ function log_message($request){
 		$written .= $s;
 	}
 	fwrite($log_id, "END " . $log_id . ":\n");
-	log_id++;
+	$log_id++;
 	return $written;
 }
 
