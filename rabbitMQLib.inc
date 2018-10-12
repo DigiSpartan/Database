@@ -15,7 +15,8 @@ class rabbitMQServer
 	private $routing_key = '*';
 	private $exchange_type = "topic";
 	private $auto_delete = false;
-
+	private $log_id = 0;
+	
 	function __construct($machine, $server = "rabbitMQ")
 	{
 		$this->machine = getHostInfo(array($machine));
@@ -129,7 +130,7 @@ class rabbitMQServer
 		}
 		catch (Exception $e)
 		{
-			trigger_error("Failed to start request processor: ".$e,E_USER_ERROR); 
+			trigger_error("Failed to start request processor: ".$e,E_USER_ERROR);
 		}
 	}
 }
@@ -269,4 +270,3 @@ class rabbitMQClient
 	}
 }
 ?>
-

@@ -4,6 +4,7 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('login.php.inc');
+require_once('logfn.inc');
 
 function doLogin($username,$password)
 {
@@ -54,7 +55,7 @@ function doRegister($username, $password)
    $pathArray = explode("/",$file);
    if ($num == 0) {
       $s2 = sprintf("INSERT INTO users (username, passhash) VALUES ('%s', '%s')",
-		mysqli_real_escape_string($username), 
+		mysqli_real_escape_string($username),
 		mysqli_real_escape_string($pass_hash));
       $t2 = mysqli_query($db, $s2) or die (mysqli_error($db));
       echo "register";
@@ -86,6 +87,7 @@ function requestProcessor($request)
     case "validate_session":
       return doValidate($request['sessionId']);
   }
+  log_message($request);
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
 
@@ -95,5 +97,3 @@ $server->process_requests('requestProcessor');
 echo "testRabbitMQServer END".PHP_EOL;
 exit();
 ?>
-
-
