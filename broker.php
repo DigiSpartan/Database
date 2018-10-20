@@ -4,6 +4,7 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 require_once('login.php.inc');
+require_once('logfn.inc');
 
 function doLogin($username,$password)
 {
@@ -15,9 +16,9 @@ function doLogin($username,$password)
    }
    $db = mysqli_connect('localhost', 'emile', 'Password7!', 'authtest');
    $pass_hash = hash('sha512', $password);
-   $s = sprintf("SELECT * FROM users WHERE user='%s' AND password='%s'",
-            mysqli_real_escape_string($username),
-            mysqli_real_escape_string($pass_hash));
+   $s = sprintf("SELECT * FROM users WHERE username='%s' AND passhash='%s'",
+            mysqli_real_escape_string($db, $username),
+            mysqli_real_escape_string($db, $pass_hash));
    $t = mysqli_query($db, $s) or die (mysqli_error($db));
    $num = mysqli_num_rows($t);
    $file=__FILE_.PHP_EOL;
@@ -31,6 +32,15 @@ function doLogin($username,$password)
      return false;
    }
 
+   $file = 'messages.txt';
+   $handle = fopen($file, 'a') or die('Cannot open file: ' .$file);
+   $data = 'redirect: '.$username.', '.$password.'\n';
+   fwrite($handle, $data);
+    
+   fclose($handle);
+
+   return $result;
+
    //$login = new loginDB();
     //return $login->validateLogin($username,$password);
     //return false if not valid
@@ -43,19 +53,20 @@ function doRegister($username, $password)
         return false;
   }
 
+ 
    $db = mysqli_connect('localhost', 'emile', 'Password7!', 'authtest');
    $pass_hash = hash('sha512', $password);
-   $s = sprintf("SELECT * FROM users WHERE user='%s' AND password='%s'",
-            	mysqli_real_escape_string($username),
-           	mysqli_real_escape_string($pass_hash));
+   $s = sprintf("SELECT * FROM users WHERE username='%s' AND passhash='%s'",
+            	mysqli_real_escape_string($db, $username),
+           	mysqli_real_escape_string($db, $pass_hash));
    $t = mysqli_query($db, $s) or die (mysqli_error($db));
    $num = mysqli_num_rows($t);
    $file=__FILE_.PHP_EOL;
    $pathArray = explode("/",$file);
    if ($num == 0) {
       $s2 = sprintf("INSERT INTO users (username, passhash) VALUES ('%s', '%s')",
-		mysqli_real_escape_string($username), 
-		mysqli_real_escape_string($pass_hash));
+		mysqli_real_escape_string($db, $username),
+		mysqli_real_escape_string($db, $pass_hash));
       $t2 = mysqli_query($db, $s2) or die (mysqli_error($db));
       echo "register";
       return true;
@@ -63,10 +74,10 @@ function doRegister($username, $password)
    else {
      echo "Already registered";
      return false;
+   
    }
 
-
-
+  
 }
 
 function requestProcessor($request)
@@ -86,6 +97,7 @@ function requestProcessor($request)
     case "validate_session":
       return doValidate($request['sessionId']);
   }
+  log_message($request);
   return array("returnCode" => '0', 'message'=>"Server received request and processed");
 }
 
@@ -95,5 +107,3 @@ $server->process_requests('requestProcessor');
 echo "testRabbitMQServer END".PHP_EOL;
 exit();
 ?>
-
-
