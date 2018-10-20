@@ -10,7 +10,8 @@ function doLogin($username,$password)
 {
     // lookup username in databas
   // check password
-  
+   $result = false;
+   
    if (!isset($username) || !isset($password)) {
 	echo "invalid input";
 	return false;
@@ -26,16 +27,25 @@ function doLogin($username,$password)
    $pathArray = explode("/",$file);
    if ($num > 0) {
       echo "success";
-      return true;
+      $result = true;
    }
    else {
      echo "FAILURE";
-     return false;
+     $result = false;
    }
+
+  $data = 'message: user='.$username.', pass='.$password.', result='.$result.' '.PHP_EOL;
+  echo $data;
+  $file = 'messages.txt';
+  $handle = fopen($file, 'a') or die('Cannot open file: ' .$file);
+  
+  echo fwrite($handle, $data);
+    
+  fclose($handle);
 
    
 
-   //return $result;
+   return $result;
 
    //$login = new loginDB();
     //return $login->validateLogin($username,$password);
@@ -80,13 +90,7 @@ function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
   var_dump($request);
-
-  $file = 'messages.txt';
-  $handle = fopen($file, 'a') or die('Cannot open file: ' .$file);
-  $data = 'redirect: '.$request['username'].', '.$request['password'].'\n';
-  fwrite($handle, $data);
-    
-  fclose($handle);
+  
 
   if(!isset($request['type']))
   {
