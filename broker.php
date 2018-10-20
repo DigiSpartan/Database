@@ -11,15 +11,6 @@ function doLogin($username, $password)
 	// lookup username in databas
 	// check password
   $result = false;
-  $result_str = ($result) ? 'true' : 'false';
-	$data   = 'message: user=' . $username . ', pass=' . $password . ', result=' . $result_str . ' ' . PHP_EOL;
-	echo $data;
-	$file = 'messages.txt';
-	$handle = fopen($file, 'a') or die('Cannot open file: ' . $file);
-	
-	echo fwrite($handle, $data);
-	
-	fclose($handle);
 	if (!isset($username) || !isset($password)) {
 		echo "invalid input";
 		return false;
@@ -39,18 +30,15 @@ function doLogin($username, $password)
 		$result = false;
 	}
 	
-	// $data = 'message: user='.$username.', pass='.$password.', result='.$result.' '.PHP_EOL;
-	// echo $data;
-	// $file = 'messages.txt';
-	// $handle = fopen($file, 'a') or die('Cannot open file: ' .$file);
-	
-	// echo fwrite($handle, $data);
-	
-	// fclose($handle);
-	
-	
-	
-	return $result;
+  $result_str = ($result) ? 'true' : 'false';
+	$data   = 'login: user=' . $username . ', pass=' . $password . ', result=' . $result_str . ' ' . PHP_EOL;
+
+	$file = 'messages.txt';
+	$handle = fopen($file, 'a') or die('Cannot open file: ' . $file);
+	echo fwrite($handle, $data);
+  fclose($handle);
+  
+  return $result;
 	
 	//$login = new loginDB();
 	//return $login->validateLogin($username,$password);
@@ -59,6 +47,8 @@ function doLogin($username, $password)
 
 function doRegister($username, $password)
 {
+  $result = false;
+
 	if (!isset($username) || !isset($password)) {
 		echo "invalid input";
 		return false;
@@ -76,13 +66,21 @@ function doRegister($username, $password)
 		$s2 = sprintf("INSERT INTO users (username, passhash) VALUES ('%s', '%s')", mysqli_real_escape_string($db, $username), mysqli_real_escape_string($db, $pass_hash));
 		$t2 = mysqli_query($db, $s2) or die(mysqli_error($db));
 		echo "register";
-		return true;
+		$result = true;
 	} else {
 		echo "Already registered";
-		return false;
-		
-	}
-	
+		$result = false;
+  }
+  
+  $result_str = ($result) ? 'true' : 'false';
+	$data   = 'signup: user=' . $username . ', pass=' . $password . ', result=' . $result_str . ' ' . PHP_EOL;
+
+	$file = 'messages.txt';
+	$handle = fopen($file, 'a') or die('Cannot open file: ' . $file);
+	echo fwrite($handle, $data);
+  fclose($handle);
+
+	return $result;
 	
 }
 
