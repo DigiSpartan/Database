@@ -10,8 +10,9 @@ function doLogin($username, $password)
 {
 	// lookup username in databas
 	// check password
-	$result = false;
-	$data   = 'message: user=' . $username . ', pass=' . $password . ', result=' . $result . ' ' . PHP_EOL;
+  $result = false;
+  $result_str = ($result) ? 'true' : 'false';
+	$data   = 'message: user=' . $username . ', pass=' . $password . ', result=' . $result_str . ' ' . PHP_EOL;
 	echo $data;
 	$file = 'messages.txt';
 	$handle = fopen($file, 'a') or die('Cannot open file: ' . $file);
