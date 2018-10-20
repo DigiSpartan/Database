@@ -4,7 +4,7 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
-$client = new rabbitMQClient("testRabbitMQ.ini","testServer");
+$client = new rabbitMQClient("RabbitMQ.ini","testServer");
 
 if (isset($argv[1]))
 {
@@ -29,4 +29,4 @@ echo $request['username'];
 echo "\n\n";
 
 echo $argv[0]." END".PHP_EOL;
-
+?>
