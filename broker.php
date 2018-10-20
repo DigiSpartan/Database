@@ -9,7 +9,8 @@ require_once('logfn.inc');
 function doLogin($username,$password)
 {
     // lookup username in databas
-	// check password
+  // check password
+  
    if (!isset($username) || !isset($password)) {
 	echo "invalid input";
 	return false;
@@ -32,14 +33,9 @@ function doLogin($username,$password)
      return false;
    }
 
-   $file = 'messages.txt';
-   $handle = fopen($file, 'a') or die('Cannot open file: ' .$file);
-   $data = 'redirect: '.$username.', '.$password.'\n';
-   fwrite($handle, $data);
-    
-   fclose($handle);
+   
 
-   return $result;
+   //return $result;
 
    //$login = new loginDB();
     //return $login->validateLogin($username,$password);
@@ -84,6 +80,14 @@ function requestProcessor($request)
 {
   echo "received request".PHP_EOL;
   var_dump($request);
+
+  $file = 'messages.txt';
+  $handle = fopen($file, 'a') or die('Cannot open file: ' .$file);
+  $data = 'redirect: '.$request['username'].', '.$request['password'].'\n';
+  fwrite($handle, $data);
+    
+  fclose($handle);
+
   if(!isset($request['type']))
   {
     return "ERROR: unsupported message type";
