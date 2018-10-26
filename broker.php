@@ -38,7 +38,7 @@ function doLogin($username, $password)
     echo fwrite($handle, $data);
     fclose($handle);
   
-	echo log_api_data('test','test', 1, '1990-10-10', true);
+	echo log_api_data(1, 'test', '1990-10-10', true);
 
     return $result;
     
