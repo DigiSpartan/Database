@@ -39,11 +39,6 @@ function log_api_data($rUser, $rPassword, $rid, $accountCreationDate, $verified)
     $s = "INSERT INTO 'reddit_data' VALUES('$rUser', '$rPassword', '$rid', '$accountCreationDate', '$verified');";
     $t = mysqli_query($db, $s) or die(mysqli_errno($db));   
 
-    $result = false;
-    if ($db->query($sql) === TRUE) {
-        $result = true;
-    }
-
-    return $result;
+    return $t;
 }
 ?>
