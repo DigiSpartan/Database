@@ -1,0 +1,4 @@
+login: user=test, pass=test, result=true 
+login: user=blabla, pass=blablablabacon, result=false 
+login: user=fgfdgdfg, pass=gdfgdg, result=false 
+login: user=fdsfdsfsd, pass=sdfsdfdsfdsf, result=false 
