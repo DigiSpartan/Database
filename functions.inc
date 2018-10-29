@@ -26,15 +26,26 @@ function log_message($request)
     return $written;
 }
 
-*/
+*/ 
 function log_api_data($rid, $rUser, $accountCreationDate, $verified) {
     $db = mysqli_connect('localhost', 'emile', 'Password7!', 'authtest');
     
     $rUser = mysqli_real_escape_string($db, $rUser);
-    echo "attempt insert";
-    $s = "INSERT INTO reddit_data VALUES('".$rid."', '".$rUser."', CAST('". $accountCreationDate ."' AS DATE), '".$verified."');";
-    $t = (mysqli_query($db, $s) or die(mysqli_errno($db)));   
-    echo "success!!!";
-    return $t;
+
+    $s = "SELECT * FROM reddit_data WHERE redditorID =' . $rid .';";
+    $t = (mysqli_query($db, $s) or die(mysqli_errno($db))); 
+    $num = mysqli_num_rows($t);
+    $result = false;
+
+    if ($num == 1){
+        $result = true;
+    }
+    else {
+        $s = "INSERT INTO reddit_data VALUES('".$rid."', '".$rUser."', CAST('". $accountCreationDate ."' AS DATE), '".$verified."');";
+        $t = (mysqli_query($db, $s) or die(mysqli_errno($db)));
+    
+        $result = true;
+    }
+    return $result;
 }
 ?>
