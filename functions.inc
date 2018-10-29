@@ -26,17 +26,22 @@ function log_message($request)
     return $written;
 }
 
-function log_api_data($rUser, $rid, $accountCreationDate, $verified) {
+function log_api_data($rid, $rUser, $accountCreationDate, $verified) {
     $db = mysqli_connect('localhost', 'emile', 'Password7!', 'authtest');
     
-    $rUser = mysqli_real_escape_string($rUser);
-    $rid = mysqli_real_escape_string($rid);
-    $accountCreationDate = mysqli_real_escape_string($accountCreationDate);
-    $verified = mysqli_real_escape_string($verified);
+    $rUser = mysqli_real_escape_string($db, $rUser);
+    $rid = mysqli_real_escape_string($db, $rid);
+    $accountCreationDate = mysqli_real_escape_string($db, $accountCreationDate);
+    $verified = mysqli_real_escape_string($db, $verified);
 
-    $s = "INSERT INTO 'reddit_data' VALUES('$rid', '$rUser', '$accountCreationDate', '$verified');";
-    $t = mysqli_query($db, $s) or die(mysqli_errno($db));   
+    $s = "INSERT INTO reddit_data VALUES('".$rid."', '".$rUser."', CAST('". $accountCreationDate ."' AS DATE), '".$verified."');";
+    $t = (mysqli_query($db, $s) or die(mysqli_errno($db)));   
 
-    return $t;
+    if ($t === false) {
+        return false;
+    }
+    else {
+        return true;
+    }
 }
 ?>
