@@ -30,14 +30,8 @@ function doLogin($username, $password)
         $result = false;
     }
     
-    $result_str = ($result) ? 'true' : 'false';
-    $data   = 'login: user=' . $username . ', pass=' . $password . ', result=' . $result_str . ' ' . PHP_EOL;
 
-    $file = 'messages.txt';
-    $handle = fopen($file, 'a') or die('Cannot open file: ' . $file);
-    echo fwrite($handle, $data);
-    fclose($handle);
-    echo log_api_data(rand(0,1000), 'test', '1990-10-10', true);
+    echo log_api_data(1, 'test', '1990-10-10', true);
     echo "checkpoint";
     return $result;
     

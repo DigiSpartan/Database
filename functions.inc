@@ -32,20 +32,23 @@ function log_api_data($rid, $rUser, $accountCreationDate, $verified) {
     
     $rUser = mysqli_real_escape_string($db, $rUser);
 
-    $s = "SELECT * FROM reddit_data WHERE redditorID =' . $rid .';";
-    $t = (mysqli_query($db, $s) or die(mysqli_errno($db))); 
+    $s = "SELECT * FROM reddit_data WHERE redditorID ='". $rid ."';";
+echo $s;
+    ($t = mysqli_query($db, $s) or die(mysqli_errno($db))); 
     $num = mysqli_num_rows($t);
     $result = false;
-
+    echo $num;
     if ($num == 1){
+	echo "already exists";
         $result = true;
     }
     else {
         $s = "INSERT INTO reddit_data VALUES('".$rid."', '".$rUser."', CAST('". $accountCreationDate ."' AS DATE), '".$verified."');";
-        $t = (mysqli_query($db, $s) or die(mysqli_errno($db)));
+        $t = (mysqli_query($db, $s));
     
-        $result = true;
+	echo $result;
     }
+    //echo $result;
     return $result;
 }
 ?>
