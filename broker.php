@@ -31,7 +31,7 @@ function doLogin($username, $password)
     }
     
 
-    echo log_api_data(1, 'test', '1990-10-10', true);
+    //echo log_api_data(1, 'test', '1990-10-10', true);
     echo "checkpoint";
     return $result;
     

@@ -13,3 +13,6 @@ login: user=test, pass=test, result=true
 login: user=test, pass=test, result=true 
 login: user=ttesst, pass=test, result=false 
 login: user=ttesst, pass=test, result=false 
+signup: user=danv, pass=password, result=true 
+signup: user=test, pass=test, result=false 
+signup: user=testreg, pass=test, result=true 
