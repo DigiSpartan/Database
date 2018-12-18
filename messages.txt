@@ -1,0 +1,26 @@
+<<<<<<< HEAD
+=======
+login: user=test, pass=test, result=true 
+login: user=test, pass=test, result=true 
+login: user=test, pass=test, result=true 
+login: user=test, pass=test, result=true 
+login: user=test, pass=test, result=true 
+login: user=test, pass=test, result=true 
+login: user=test, pass=test, result=true 
+login: user=test, pass=test, result=true 
+login: user=test, pass=test, result=true 
+login: user=test, pass=test, result=true 
+login: user=test, pass=test, result=true 
+login: user=test, pass=test, result=true 
+login: user=test, pass=test, result=true 
+login: user=ttesst, pass=test, result=false 
+login: user=ttesst, pass=test, result=false 
+signup: user=danv, pass=password, result=true 
+signup: user=test, pass=test, result=false 
+signup: user=testreg, pass=test, result=true 
+signup: user=bill, pass=bill, result=true 
+signup: user=Alex, pass=alex, result=true 
+signup: user=Tom, pass=tom, result=true 
+signup: user=dan, pass=it490, result=true 
+signup: user=test-dan, pass=password, result=true 
+>>>>>>> develop
