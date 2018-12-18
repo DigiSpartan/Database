@@ -92,15 +92,9 @@ function doEmail($username, $email,$yn)
     $pathArray = explode("/", $file);
 
 	if ($num == 0) {
-<<<<<<< HEAD
 	   $s2 = sprintf("INSERT INTO email_notif (username, email, notif) VALUES ('%s', '%s', '1')", mysqli_real_escape_string($db, $username), mysqli_real_escape_string($db, $email));
            $t2 = mysqli_query($db, $s2) or die(mysqli_error($db));
            echo "email_added with default notif to true.";        
-=======
-	   $s2 = sprintf("INSERT INTO email_notif (username, email, notif) VALUES ('%s', '%s', '0')", mysqli_real_escape_string($db, $username), mysqli_real_escape_string($db, $email));
-           $t2 = mysqli_query($db, $s2) or die(mysqli_error($db));
-           echo "email_added with default notif to false.";        
->>>>>>> e296dd384185801a2fd048b5163e475f93deb950
            $result = true;
 	} else {
 	    if ($yn == 'yes'){
